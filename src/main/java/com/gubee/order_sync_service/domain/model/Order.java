@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Order {
 
-    private final String id;
+    private final OrderId id;
     private final String marketplace;
     private OrderStatus status;
 
-    public Order(String id, String marketplace){
-        if (id == null || id.isBlank()){
+    public Order(OrderId id, String marketplace) {
+        if (id == null) {
             throw new IllegalArgumentException("Order id is required");
         }
 
-        if (marketplace == null || marketplace.isBlank()){
+        if (marketplace == null || marketplace.isBlank()) {
             throw new IllegalArgumentException("Marketplace is required");
         }
 
@@ -22,8 +22,9 @@ public class Order {
         this.status = OrderStatus.CREATED;
     }
 
-    public void startProcessing(){
-        if (status != OrderStatus.CREATED){
+
+    public void startProcessing() {
+        if (status != OrderStatus.CREATED) {
             throw new IllegalStateException("Order cannot start processing");
         }
         this.status = OrderStatus.PROCESSING;
@@ -33,15 +34,14 @@ public class Order {
         if (status != OrderStatus.PROCESSING) {
             throw new IllegalStateException("Order is not processing");
         }
-
         this.status = OrderStatus.PROCESSED;
     }
 
     public void fail() {
         this.status = OrderStatus.FAILED;
     }
-    
-    public String getId() {
+
+    public OrderId getId() {
         return id;
     }
 
@@ -49,20 +49,19 @@ public class Order {
         return marketplace;
     }
 
-    public OrderStatus getStatus(){
+    public OrderStatus getStatus() {
         return status;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-
-        if(!(o instanceof Order order)) return false;
-        return id.equals((order.id));
+        if (!(o instanceof Order order)) return false;
+        return id.equals(order.id);
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return Objects.hash(id);
     }
 }

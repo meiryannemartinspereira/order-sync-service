@@ -1,6 +1,8 @@
 package com.gubee.order_sync_service.adapter.in.web;
 
+import com.gubee.order_sync_service.adapter.in.web.dto.CreateOrderRequest;
 import com.gubee.order_sync_service.application.OrderProcessingService;
+import com.gubee.order_sync_service.domain.model.Order;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,11 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(
-        @RequestParam String id,
-        @RequestParam String marketplace
+    public ResponseEntity<Order> createOrder(
+        @RequestBody CreateOrderRequest request
     ) {
-        service.createAndStartProcessing(id, marketplace);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        Order order = service.createAndStartProcessing(request.getMarketplace());
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
     

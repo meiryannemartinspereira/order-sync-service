@@ -8,7 +8,9 @@ public class OrderTest {
 
     @Test
     void shouldCreateOrderWithStatusCreated(){
-        Order order = new Order("123", "MERCADO_LIVRE");
+        OrderId orderId = OrderId.generate();
+
+        Order order = new Order(orderId, "MERCADO_LIVRE");
 
         assertEquals(OrderStatus.CREATED, order.getStatus());
 
@@ -16,7 +18,8 @@ public class OrderTest {
 
     @Test
     void shouldStartProcessingWhenOrderIsCreated() {
-        Order order = new Order("123", "MERCADO_LIVRE");
+        OrderId orderId = OrderId.generate();
+        Order order = new Order(orderId, "MERCADO_LIVRE");
 
         order.startProcessing();
         
@@ -25,7 +28,8 @@ public class OrderTest {
 
     @Test
     void shouldNotStartProcessingIfOrderIsNotCreated(){
-        Order order = new Order("123", "MERCADO_LIVRE");
+        OrderId orderId = OrderId.generate();
+        Order order = new Order(orderId, "MERCADO_LIVRE");
         order.startProcessing();
 
         IllegalStateException exception = assertThrows(
