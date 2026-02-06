@@ -187,5 +187,4 @@ Controller → Application → Domain → Ports → Adapters
 
 ---
 
-💙 Arquitetura pensada para crescer sem dor.
 
